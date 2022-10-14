@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import {Routes, Route} from 'react-router-dom';
+import Layout from './components/Layout/Layout'
+import Posts from './pages/Posts/Posts';
+import Main from './pages/Main/Main';
+import {getUsers} from './store/reducers/posts.reducer'
+import Comments from './pages/Comments/Comments';
+import EditComment from './components/EditComment/EditComment';
+
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsers())
+  }, [])
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Routes>
+        <Route path= '/' element={<Main/>}/>
+        <Route path= ':id/posts' element={<Posts/>}/>
+        <Route path= ':id/posts/comments' element={<Comments/>}/>
+        <Route path= ':id/posts/comments/:commID' element={<EditComment/>}/>
+      </Routes>
+    </Layout>
   );
 }
 

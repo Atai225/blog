@@ -1,0 +1,17 @@
+.posts__item{
+    padding: 1rem 1rem 2.7rem 1rem;
+    margin: 1rem;
+    width: 600px;
+    position: relative;
+    border: 1px solid;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    background-color: #21242D;
+
+}
+.posts__item--title::first-letter, .posts__item--text::first-letter{
+    text-transform: uppercase;
+}

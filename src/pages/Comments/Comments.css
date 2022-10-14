@@ -1,0 +1,17 @@
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+input {
+    padding: 8px 1rem;
+    outline: none;
+    border: 1px solid white;
+    margin-bottom: 1rem;
+}
+
+textarea {
+    
+}
