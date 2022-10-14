@@ -141,7 +141,7 @@ const postsSlice = createSlice({
       state.comments = [...removed];
 		},
     editComment: (state, action) => {
-      state.comments = action
+      state.comments[action.payload.id].body = action.payload.value;
     }
   }
 });

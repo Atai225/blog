@@ -1,0 +1,45 @@
+@import url(https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800);
+
+.comments__item{
+    margin: 1rem 0;
+    max-width: 700px;
+}
+.comments__item--title::first-letter, .comments__item--text::first-letter{
+    text-transform: uppercase;
+}
+
+.comments__item--title{
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Manrope';
+    margin-bottom: 0.625rem;
+}
+
+.comments__info{
+    background: #21242D;
+    padding: 2rem;
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    -ms-border-radius: 24px;
+    -o-border-radius: 24px;
+}
+.comments__btn{
+    margin: 1rem 0;
+}
+.btn{
+    border: 1px solid white;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    padding: 10px;
+    background: #21242D;
+    color: white;
+    margin-right: 10px;
+}
+.red{
+    border: 1px solid red;
+    color: red;
+}

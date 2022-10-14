@@ -23,7 +23,7 @@ function Search({ filterByA, search, isReversedA, isReversedB, filterByB }) {
           {isReversedA ? <BsSortNumericDownAlt /> : <BsSortNumericDown />}
         </button>
         <button onClick={filterByB} className="sort__btn">
-          {isReversedB ? <BsSortAlphaDown /> : <BsSortAlphaDownAlt />}
+          {isReversedB ?  <BsSortAlphaDownAlt /> : <BsSortAlphaDown />}
         </button>
       </div>
     </div>

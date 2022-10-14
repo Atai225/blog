@@ -1,4 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800);
+
 .wrapper{
     background: #15171E;
     min-height:100vh;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+}
+.logo{
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 800;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+}
+.header, .footer{
+    padding: 2rem;
+}
+.footer{
+    background-color: #21242D;
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    -ms-border-radius: 24px;
+    -o-border-radius: 24px;
+    display: flex;
+    
 }

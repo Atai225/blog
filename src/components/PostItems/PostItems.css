@@ -1,17 +1,29 @@
-.posts__item{
-    padding: 1rem 1rem 2.7rem 1rem;
-    margin: 1rem;
-    width: 600px;
-    position: relative;
-    border: 1px solid;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    background-color: #21242D;
+@import url(https://fonts.googleapis.com/css?family=Manrope:200,300,regular,500,600,700,800);
 
+.posts__item{
+    margin: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 700px;
 }
 .posts__item--title::first-letter, .posts__item--text::first-letter{
     text-transform: uppercase;
+}
+
+.posts__item--title{
+    font-size: 30px;
+    font-weight: 600;
+    font-family: 'Manrope';
+    margin-bottom: 0.625rem;
+}
+
+.posts__info{
+    background: #21242D;
+    padding: 2rem;
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    -ms-border-radius: 24px;
+    -o-border-radius: 24px;
 }

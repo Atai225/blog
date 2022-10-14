@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Search from "../../components/Search/Search";
 import Users from "../../components/UserItems/UserItems";
+import { filterCity, filterID, searchPhone } from "../../helpers/helpers";
 import './Main.css';
 
 
@@ -19,31 +20,25 @@ function Main() {
 
 
   const filterById = () => {
-     isReversedID ? 
-        setFiltered([...users].sort((a, b) => a.id > b.id ? 1 : -1)) 
-        : setFiltered([...users].sort((a, b) => a.id > b.id ? -1 : 1))
+    setFiltered(filterID(isReversedID, users))
     setIsReversedID(!isReversedID)
   }
+
   const filterByCity = () => {
-    isReversedCity ? 
-        setFiltered([...users].sort((a, b) => a.address.city > b.address.city ? 1 : -1)) 
-        : setFiltered([...users].sort((a, b) => a.address.city > b.address.city ? -1 : 1))
+    setFiltered(filterCity(isReversedCity, users))
     setIsReversedCity(!isReversedCity)
   }
   
-  const searchPhoneNum = (e) => {
-    setFiltered([...users].filter((user) => user.phone.startsWith(e.target.value)));
-  }
+  const searchPhoneNum = (e) => setFiltered(searchPhone(e, users))
+
 
   return (
-    <div className="main">
-        <div className="container">
+    <main className="main">
           <Search search={(e) => searchPhoneNum(e)} filterByA={filterById} filterByB={filterByCity} isReversedA={isReversedID} isReversedB={isReversedCity}/>
           <ul className="users__list">
-              {filtered ? filtered.map((user) => <Users key={user.id} info={user}/>) : <div className="error">Нет совпадений :/</div>}
+              {filtered.length > 0 ? filtered.map((user) => <Users key={user.id} info={user}/>) : <div className="error">Нет совпадений :/</div>}
           </ul>
-        </div>
-    </div>
+    </main>
   )
 }
 

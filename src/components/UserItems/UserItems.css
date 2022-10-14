@@ -2,18 +2,10 @@
 
 .list__item{
     margin: 1rem 0;
-}
-
-.user__box{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #21242D;
-    border-radius: 24px;
-    -webkit-border-radius: 24px;
-    -moz-border-radius: 24px;
-    -ms-border-radius: 24px;
-    -o-border-radius: 24px;
+    max-width: 700px;
 }
 .user__name{
     font-size: 30px;
@@ -27,18 +19,29 @@
     font-weight: 400;
 }
 .user__info{
+    background: #21242D;
     padding: 2rem;
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    -ms-border-radius: 24px;
+    -o-border-radius: 24px;
 }
-
-.link-box{
-    display: flex;
-    justify-content: center;
+.block{
+    width: 600px;
+    display: flex; 
+    justify-content: space-between;
     align-items: center;
 }
+
 .link{
     color: white;
     text-decoration: none;
     font-size: 20px;
     font-family: 'Manrope';
     font-weight: 400;
+    padding: 2rem;
+}
+.link:hover{
+    text-decoration: underline;
 }

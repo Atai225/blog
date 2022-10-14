@@ -6,13 +6,14 @@ import {useParams} from 'react-router-dom'
 import {addComment, deleteComment} from '../../store/reducers/posts.reducer'
 import Modal from '../../components/UI/Modal/Modal';
 import './Comments.css'
+import { filterABC, filterID,searchName } from '../../helpers/helpers';
 
 
 function Comments() {
   const {id} = useParams()
     const comments = useSelector(store => store.posts.comments)
     const [filtered, setFiltered] = useState(comments);
-    const [newComment, setNewComment] = useState({
+    const [newComment, setNewComment] = useState(comments || {
     "postId": id,
     "id": comments.length+1,
     "name": '',
@@ -21,6 +22,7 @@ function Comments() {
     });
     
     const [show, setShow] = useState(false);
+    const [enableToEdit, setEnableToEdit] = useState(false);
     const [isReversedID, setIsReversedID] = useState(false);
     const [isReversedName, setIsReversedName] = useState(false);
     const dispatch = useDispatch()
@@ -30,22 +32,17 @@ function Comments() {
       setFiltered(reversed)
     }, [comments])
 
-  const filterById = () => {
-     isReversedID ? 
-        setFiltered([...comments].sort((a, b) => a.id > b.id ? -1 : 1)) 
-        : setFiltered([...comments].sort((a, b) => a.id > b.id ? 1 : -1))
-    setIsReversedID(!isReversedID)
-  }
-  const filterByName = () => {
-    isReversedName ? 
-        setFiltered([...comments].sort((a, b) => a.title > b.title ? -1 : 1)) 
-        : setFiltered([...comments].sort((a, b) => a.title > b.title ? 1 : -1))
-    setIsReversedName(!isReversedName)
-  }
+    const filterById = () => {
+      setFiltered(filterID(isReversedID, comments))
+      setIsReversedID(!isReversedID)
+    }
   
-  const searchPost = (e) => {
-    setFiltered([...comments].filter((user) => user.name.startsWith(e.target.value)));
-  }
+    const filterByName = () => {
+      setFiltered(filterABC(isReversedName, comments))
+      setIsReversedName(!isReversedName)
+    }
+    
+    const searchByTitle = (e) => setFiltered(searchName(e, comments))
 
   const plusComment = () => {
     dispatch(addComment(newComment));
@@ -64,31 +61,52 @@ function Comments() {
       };
     });
   };
+  
+  const edit = (id, e) => {
+    const edited = newComment.forEach(item => {
+      if(item.id === id){
+        item.body = e.target.value;
+      }
+    })
+    setNewComment(edited)
+  }
 
 
   return (
-    <div className="posts">
-      <Search search={(e) => searchPost(e)} filterByA={filterById} filterByB={filterByName} isReversedA={isReversedID} isReversedB={isReversedName}/>
-      <button onClick={()=>setShow(true)}>AddComemnt</button>
-        <ul className="posts__list">
-            {filtered.length > 0 ? filtered.map((comment) => (
-                <CommentItem key={comment.id} removeItem={removeComment} comment={comment}/>
-            )) : <h2>Нет совпадений</h2>}
-        </ul>
-
-        <Modal show={show} close={() => setShow(false)} continued={plusComment} action={'Добавить'}>
-				Добавьте комментарий
-            <form className='form'>
-              <input name="name" placeholder='Введите ваше имя'/>
-              <input name="email" placeholder='Введите вашу почту'/>
-            <textarea
-                name='body'
-                placeholder="Напишите комментарий"
-                onChange={changeHandler}
-              />
-            </form>
-			</Modal>
-    </div>
+    <main className="comments">
+        <Search search={(e) => searchByTitle(e)} filterByA={filterById} filterByB={filterByName} isReversedA={isReversedID} isReversedB={isReversedName}/>
+        <button className="btn" onClick={()=>setShow(true)}>Add Comment</button>
+          <ul className="comments__list">
+              {filtered.length > 0 ? filtered.map((comment) => (
+                  <CommentItem key={comment.id} edit={() => setEnableToEdit(true)} removeItem={removeComment} comment={comment}/>
+              )) : <h2>Нет совпадений</h2>}
+          </ul>
+  
+          <Modal show={show} close={() => setShow(false)} continued={plusComment} action={'Добавить'}>
+  				Добавьте комментарий
+              <form className='form'>
+                <input value={newComment.name} name="name" placeholder='Введите ваше имя'/>
+                <input value={newComment.body} name="email" placeholder='Введите вашу почту'/>
+              <textarea
+                  name='body'
+                  placeholder="Напишите комментарий"
+                  onChange={changeHandler}
+                />
+              </form>
+  			</Modal>
+        <Modal show={enableToEdit} close={() => setEnableToEdit(false)} continued={edit} action={'Изменить'}>
+  				Добавьте комментарий
+              <form className='form'>
+                <input value={newComment.name} name="name" placeholder='Введите ваше имя'/>
+                <input value={newComment.body} name="email" placeholder='Введите вашу почту'/>
+              <textarea
+                  name='body'
+                  placeholder="Напишите комментарий"
+                  onChange={changeHandler}
+                />
+              </form>
+  			</Modal>
+    </main>
   )
 }
 
