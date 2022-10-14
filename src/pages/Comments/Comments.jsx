@@ -22,6 +22,7 @@ function Comments() {
     });
     
     const [show, setShow] = useState(false);
+    const [specialComment, setSpecialComment] = useState(0);
     const [enableToEdit, setEnableToEdit] = useState(false);
     const [isReversedID, setIsReversedID] = useState(false);
     const [isReversedName, setIsReversedName] = useState(false);
@@ -47,6 +48,13 @@ function Comments() {
   const plusComment = () => {
     dispatch(addComment(newComment));
     setShow(false)
+    setNewComment({
+      "postId": id,
+      "id": comments.length+1,
+      "name": '',
+      "email": '',
+      "body": ''
+      })
   }
 
   const removeComment = (id) => {
@@ -61,14 +69,18 @@ function Comments() {
       };
     });
   };
-  
-  const edit = (id, e) => {
-    const edited = newComment.forEach(item => {
-      if(item.id === id){
-        item.body = e.target.value;
+
+  const changeEditStatus = (id) => {
+    setSpecialComment(id);
+    setEnableToEdit(true)
+  }
+  const editComment = () => {
+    setFiltered(filtered.forEach((item) => {
+        if(item.id === specialComment){
+          item.body = newComment[0].body;
       }
-    })
-    setNewComment(edited)
+    }))
+    setEnableToEdit(false);
   }
 
 
@@ -78,29 +90,29 @@ function Comments() {
         <button className="btn" onClick={()=>setShow(true)}>Add Comment</button>
           <ul className="comments__list">
               {filtered.length > 0 ? filtered.map((comment) => (
-                  <CommentItem key={comment.id} edit={() => setEnableToEdit(true)} removeItem={removeComment} comment={comment}/>
+                  <CommentItem key={comment.id} edit={() => changeEditStatus(id)} removeItem={removeComment} comment={comment}/>
               )) : <h2>Нет совпадений</h2>}
           </ul>
   
           <Modal show={show} close={() => setShow(false)} continued={plusComment} action={'Добавить'}>
   				Добавьте комментарий
               <form className='form'>
-                <input value={newComment.name} name="name" placeholder='Введите ваше имя'/>
-                <input value={newComment.body} name="email" placeholder='Введите вашу почту'/>
-              <textarea
+                <input onChange={changeHandler} value={newComment.name} name="name" placeholder='Введите ваше имя'/>
+                <input onChange={changeHandler} value={newComment.email} name="email" placeholder='Введите вашу почту'/>
+              <input
                   name='body'
+                  value={newComment.body}
                   placeholder="Напишите комментарий"
                   onChange={changeHandler}
                 />
               </form>
   			</Modal>
-        <Modal show={enableToEdit} close={() => setEnableToEdit(false)} continued={edit} action={'Изменить'}>
+        <Modal show={enableToEdit} close={() => setEnableToEdit(false)} continued={editComment} action={'Изменить'}>
   				Добавьте комментарий
               <form className='form'>
-                <input value={newComment.name} name="name" placeholder='Введите ваше имя'/>
-                <input value={newComment.body} name="email" placeholder='Введите вашу почту'/>
-              <textarea
+              <input
                   name='body'
+                  value={newComment[0].body}
                   placeholder="Напишите комментарий"
                   onChange={changeHandler}
                 />
